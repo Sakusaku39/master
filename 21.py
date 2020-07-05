@@ -1,11 +1,30 @@
 #記事中でカテゴリ名を宣言している行を抽出せよ．
 
-import gzip
-import json
+import read20
+import re
 
-with gzip.open('/Users/skr/Desktop/100/jawiki-country.json.gz','r','utf-8') as f:
-    for l in f:
-        j = json.loads(l)
+text = read20.file_reading()
+text = text.split('\n')    #一行ごとに分けた
 
+for line in text:
+    if re.match(r'\[\[Category:.+\]\]', line):
+        print(line)
 
-print()
+"""
+.
+デフォルトのモードでは改行以外の任意の文字にマッチします
+DOTALL フラグが指定されていれば改行も含む全ての文字にマッチします
+
+^
+文字列の先頭にマッチし、 MULTILINE モードでは各改行の直後にもマッチします。
+
+$
+文字列の末尾、あるいは文字列の末尾の改行の直前にマッチし、 MULTILINE モードでは改行の前にもマッチします
+foo は 'foo' と 'foobar' の両方にマッチしますが、正規表現 foo$ は 'foo' だけにマッチします
+'foo1\nfoo2\n' を foo.$ で検索した場合、通常は 'foo2' だけにマッチしますが、MULTILINE モードでは 'foo1' にもマッチします
+$ だけで 'foo\n' を検索した場合、2 つの (空の) マッチを見つけます: 1つは改行の直前で、もう1つは文字列の末尾です
+
++
+直前の正規表現を 1 回以上繰り返したものにマッチさせる結果の正規表現にします
+例えば ab+ は 'a' に 1 つ以上の 'b' が続いたものにマッチし、単なる 'a' にはマッチしません
+"""
