@@ -4,17 +4,16 @@ Wikipedia記事のJSONファイルを読み込み，「イギリス」に関す�
 """
 
 import json
-#from collections import OrderedDict
-#import pprint
 import gzip
 
 #gzip.open(filename, [mode], [compresslevel], [encoding], [errors], [newline])
 def file_reading():
-    with gzip.open('/Users/skr/Desktop/100/jawiki-country.json.gz','r','utf-8') as f:
+    with gzip.open('/Users/skr/Desktop/100/jawiki-country.json.gz','rt','utf-8') as f:
         for l in f:
             j = json.loads(l)
             if j["title"] == "イギリス":
                 return j["text"]
+    return "見つかりません．．．"
 
 
 if __name__ == '__main__':

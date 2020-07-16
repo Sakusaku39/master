@@ -10,15 +10,19 @@ for line in text:
     if re.match(r'^(={2,})\s*(.+)\s*', line):
         print(line)
 """
-def SectionLevel(line):
-    section = re.split('(={2,})|\s+', line)
+def section_level(line):
+    section = re.sub(' ','',line)
+    section = re.split('(={2,})|\s+', section)
     return section
 
 for line in text:
-    if re.match(r'^(={2,})(\w+)(={2,})$', line):
+    if re.match(r'^(={2,})\s*(.+?)\s*(={2,})$', line):
         #print(line)
-        section = SectionLevel(line)
+        section = section_level(line)
         #print(section)
         level= len(section[1]) - 1
         #print(level)
-        print('「{section}」のセクションレベルは{level}'.format(section=section[2], level=level))
+        #if section[2] == '':
+            #print('{section}:{level}'.format(section=section[4], level=level))
+        #else:
+        print('{section}:{level}'.format(section=section[2], level=level))

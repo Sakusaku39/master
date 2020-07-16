@@ -13,11 +13,11 @@ def CategoryName(line):
     name_group = name.group(1).split('|')
     return name_group[0]
 """
-def CategoryName(line):
+def category_name(line):
     name = re.search(r'(?<=Category:)\w+', line)
     return name.group()
 
 for line in text:
     if re.match(r'\[\[Category:.+\]\]', line):
-        print(CategoryName(line))
+        print(category_name(line))
 #[ぁ-んァ-ン一-龥0-9０−９a-zA-Z・] = \w
