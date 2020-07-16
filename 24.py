@@ -7,8 +7,8 @@ text = read20.file_reading()
 text = text.split('\n')
 
 def mediafile(line):
-    deta = re.search(r'(?<=ファイル:)[^\|\]]+', line)
-    return deta.group()
+    data = re.search(r'(?<=ファイル:)[^\|\]]+', line)
+    return data.group()
 
 for line in text:
     if re.search(r'ファイル:', line):
