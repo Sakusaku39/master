@@ -1,19 +1,17 @@
-#記事中に含まれる「基礎情報」テンプレートのフィールド名と値を抽出し，辞書オブジェクトとして格納せよ．
+#25の処理時に，テンプレートの値からMediaWikiの強調マークアップ（弱い強調，強調，強い強調のすべて）を除去してテキストに変換せよ（参考: マークアップ早見表）．
 
-import read20
 import re
+import read20
 import pprint
 
 text = read20.file_reading()
 template_dictionary = {}
 
-#def basic_information(line):
+#25も関数にして持ってきた方がええんかな，わからんけど
 
 basic_information = re.search(r'^\{\{基礎情報\s国\n(.*)\n\}\}$', text, re.MULTILINE + re.DOTALL)
-#print(basic_information.group(1))
 basic_data = basic_information.group(1)
 basic_data = basic_data.split("\n")
-#print(basic_data)
 
 for line in basic_data:
     data = re.match(r'^\|(.+?)\s*\=\s*(.*)', line, re.DOTALL)  #???????????????
@@ -22,9 +20,6 @@ for line in basic_data:
     else:
         key = re.sub('\|','',data.group(1))
         key = re.sub('\s$','',key)
-        value = data.group(2)
-        #print(value)
+        value = re.sub('(\'{2,4})','',data.group(2))
         template_dictionary[key] = value
-#print(template_dictionary)
 pprint.pprint(template_dictionary, width=400)
-#pprint.pformat(template_dictionary, sort_dicts = False)

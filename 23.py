@@ -26,3 +26,5 @@ for line in text:
             #print('{section}:{level}'.format(section=section[4], level=level))
         #else:
         print('{section}:{level}'.format(section=section[2], level=level))
+
+#+? 非貪欲 (non-greedy) あるいは 最小 (minimal) のマッチが行われ、できるだけ 少ない 文字にマッチします
