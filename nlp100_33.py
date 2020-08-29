@@ -11,8 +11,12 @@
 import nlp100_30
 neko_data = nlp100_30.reading_data()
 
-for line in range(len(neko_data)):
-    if neko_data[line-1]['pos'] == '名詞' and neko_data[line]['surface'] == 'の' and neko_data[line]['pos1'] == '連体化' and neko_data[line+1]['pos'] == '名詞':
-        print(neko_data[line-1]['surface'] + neko_data[line]['surface'] + neko_data[line+1]['surface'])
-    else:
-        continue
+for data in neko_data:
+    for line in range(1, len(data)-1):
+        if 3 > len(data):
+            continue
+        else:
+            if data[line-1]['pos'] == '名詞' and data[line]['surface'] == 'の' and data[line]['pos1'] == '連体化' and data[line+1]['pos'] == '名詞':
+                print(data[line-1]['surface'] + data[line]['surface'] + data[line+1]['surface'])
+            else:
+                continue

@@ -7,6 +7,7 @@ import nlp100_30
 neko_data = nlp100_30.reading_data()
 
 for line in neko_data:
-    for k, v in line.items():
-        if v == '動詞':
-            print(line['surface'])
+    for d in line:
+        for k, v in d.items():
+            if v == '動詞':
+                print(d['surface'])

@@ -12,9 +12,9 @@ with open('/Users/skr/Desktop/100/neko.txt') as input,open('/Users/skr/Desktop/1
 をキーとするマッピング型に格納し，1文を形態素（マッピング型）のリストとして表現せよ．
 第4章の残りの問題では，ここで作ったプログラムを活用せよ．
 '''
-
 #得	動詞,自立,*,*,一段,未然形,得る,エ,エ
-#0  1    2   3 4 5   6     7   8  9
+#0  0    1   2  3 4    5    6   7  8
+
 import pandas as pd
 import re
 #filename = "/Users/skr/Desktop/100/neko.txt.mecab"
@@ -25,21 +25,40 @@ print(df)
 def reading_data():
     with open('/Users/skr/Desktop/100/neko.txt.mecab','r') as f:
         #\n\nになってるんか知らんけど変に区切られる
-        #text_data = f.read().split("\n")
-        text_data = re.split(r"(?<=[^\t\n])\n",f.read())
+        #text_data = f.read()#.split("\n")
+        text_data = re.split(r"(?<=[^\t\n])\n", f.read())
         #text_data = re.sub(r'\n\t', '\\', text_data)
-        ans = []
+        answer = []
+        sentence = []
         #print(text_data)
         for line in text_data:
-            if re.match(r'.*\t',line, re.DOTALL):
+            if line == "EOS":
+                answer.append(sentence)
+                sentence = []
+            elif re.match(r'.*\t',line, re.DOTALL):
                 d = {}
                 data = re.split(r"\t",line)
                 #print(data[1])
-                s = data[1].split(',')
-                d = {'surface':data[0], 'base':s[6], 'pos':s[0], 'pos1':s[1]}
-                ans.append(d)
-    return ans
+                if data[0] == '\n':
+                    continue
+                else:
+                    s = data[1].split(',')
+                    d = {'surface':data[0], 'base':s[6], 'pos':s[0], 'pos1':s[1]}
+                    sentence.append(d)
+            else:
+                continue
+        """
+        ans =[]
+        for num in answer:  #空のリストを消す
+            if not num:
+                continue
+            else:
+                ans.append(answer)
+        """
+    return answer
 #print(ans)
 if __name__ == '__main__':
     data = reading_data()
-    print(data)
+    for num in data:
+        for line in num:
+            print(line)
