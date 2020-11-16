@@ -9,11 +9,14 @@
 
 class Morph:
     #表層形（surface），基本形（base），品詞（pos），品詞細分類1（pos1）
-    def __init__(self, data):
-        self.surface = data['surface']
-        self.base = data['base']
-        self.pos = data['pos']
-        self.pos1 = data['pos1']
+    def __init__(self, surface, base, pos, pos1):
+        self.surface = surface
+        self.base = base
+        self.pos = pos
+        self.pos1 = pos1
+    def __str__(self):
+        return '{0}\t{1}\t{2}\t{3}'.format(self.surface, self.base, self.pos, self.pos1)
+
 
 sentences = []
 morphs = []
@@ -25,8 +28,7 @@ with open(filename, 'r') as f:
         elif line != 'EOS\n':
             surface = line.split('\t')
             ot = surface[1].strip().split(',')  #baseに「\n*」って確か出てきてしまったから消すためにストリップ使用
-            d = {'surface':surface[0], 'base':ot[6], 'pos':ot[0], 'pos1':ot[1]}
-            morphs.append(Morph(d))
+            morphs.append(Morph(surface[0], ot[6], ot[0], ot[1]))
         else:
             sentences.append(morphs)
             morphs = []
@@ -37,5 +39,6 @@ for i in range(0, len(sentences)):
     #print(num.__dict__)
 """
 #冒頭の説明文はリストsentenceの３個目の要素（2番目は空）
-for num in sentences[2]:
-    print(vars(num))
+for i in range(3):
+    for num in sentences[i]:
+        print(num)
