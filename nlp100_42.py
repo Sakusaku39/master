@@ -25,7 +25,7 @@ for i in range(3):
 for i in range(3):
     for chunk in data[i]:
       if int(chunk.dst) != -1:
-        source = ''.join([morph.surface if morph.pos != '記号' else '' for morph in chunk.morphs])
+        source = ''.join([morph.surface if morph.pos != '記号' else '' for morph in chunk.morphs])    #もし記号が出てきたらそれをなかったことにしてリストに追加して要素を文字列にするために結合する
         destination = ''.join([morph.surface if morph.pos != '記号' else '' for morph in data[i][int(chunk.dst)].morphs])
         #print('{}->{}'.format(source, destination))
         print(source, destination, sep='\t')
