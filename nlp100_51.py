@@ -22,9 +22,30 @@ infile = ['test.txt','train.txt','valid.txt']
 #outfile = ['test.feature.txt','train.feature.txt','valid.feature.txt']
 #for input, output in zip(infile, outfile):
 for input in infile:
-    with open(i, 'r') as inf:
-        for line in f:
+    with open(input, 'r') as inf:
+        datas = []
+        category = {}
+        for line in inf:
             data = line.split('\t')
+            #print(data)
+            datas.append(data)
+            #category.update(data[0])
+        #category = ['b','t','e','m']
+        #for ctg in category:
+            #ctg = []    #これでいいのか
+            b = []
+        for data in datas[:10]:
+            datafirst = clearn(data[1])
+            datafirst = word_tokenize(datafirst)    #トークン化
+            stop_words = stopwords.words('english') #ストップワード
+            datafirst = [word for word in datafirst if word not in stop_words]  #ここ多分英語での終わりの記号っていうか目印があったらそこで終了みたいになってんのかなあとで見よ？
+            porter = PorterStemmer()    #語幹抽出
+            answer1 = [porter.stem(word) for word in datafirst]
+            answer2 = nltk.pos_tag(datafirst) #品詞を見てる
+            onlypos = [pos for part, pos in answer2]
+            for genkei, pos in zip(answer1, onlypos):
+                b.append([genkei, pos])
+            print(b)
 
 """
 NLP = clearn(NLP)
